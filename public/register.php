@@ -1,19 +1,35 @@
 <?php
 include '../config/db.php';
 
+$error = "";
+$success = "";
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST['username'];
     $email = $_POST['email'];
-    $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $role = 'user'; // default role
+    $password = $_POST['password'];
     
-    $stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $username, $email, $password, $role);
+    // ตรวจสอบอีเมลซ้ำ
+    $check_email = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $check_email->bind_param("s", $email);
+    $check_email->execute();
+    $result = $check_email->get_result();
     
-    if ($stmt->execute()) {
-        header("Location: login.php?success=1");
+    if ($result->num_rows > 0) {
+        $error = "อีเมลนี้ถูกใช้งานแล้ว กรุณาใช้อีเมลอื่น";
     } else {
-        $error = "Registration failed!";
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+        $role = 'user'; // default role
+        
+        $stmt = $conn->prepare("INSERT INTO users (username, email, password, role) VALUES (?, ?, ?, ?)");
+        $stmt->bind_param("ssss", $username, $email, $password_hash, $role);
+        
+        if ($stmt->execute()) {
+            header("Location: login.php?success=1");
+            exit();
+        } else {
+            $error = "เกิดข้อผิดพลาดในการสมัครสมาชิก กรุณาลองใหม่";
+        }
     }
 }
 ?>
@@ -36,8 +52,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <h4>สมัครสมาชิก</h4>
                     </div>
                     <div class="card-body">
-                        <?php if(isset($error)): ?>
-                            <div class="alert alert-danger"><?php echo $error; ?></div>
+                        <?php if(!empty($error)): ?>
+                            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
                         <?php endif; ?>
                         
                         <form method="POST">

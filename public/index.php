@@ -1,74 +1,170 @@
 <?php
 session_start();
-require_once '../config/db.php';
-
-$query = "SELECT * FROM rooms WHERE available_rooms > 0";
-$result = $conn->query($query);
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hotel Booking System</title>
+    <title>Hotel Booking System - ระบบจองห้องพักออนไลน์</title>
     <link rel="stylesheet" href="../assets/css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="index.php">🏨 Hotel Booking</a>
-            <div class="ml-auto">
-                <?php if(isset($_SESSION['user_id'])): ?>
-                    <span class="text-white mr-3">สวัสดี, <?php echo $_SESSION['username']; ?></span>
-                    <a href="my_bookings.php" class="btn btn-outline-light mr-2">การจองของฉัน</a>
-                    <?php if($_SESSION['role'] == 'admin'): ?>
-                        <a href="admin.php" class="btn btn-outline-warning mr-2">Admin Panel</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.php">หน้าแรก</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rooms.php">จองห้องพัก</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="attractions.php">สถานที่ท่องเที่ยว</a>
+                    </li>
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="my_bookings.php">การจองของฉัน</a>
+                        </li>
+                        <?php if($_SESSION['role'] == 'admin'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="admin.php">Admin</a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="nav-item">
+                            <span class="nav-link text-white">สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger btn-sm ml-2" href="logout.php">ออกจากระบบ</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light btn-sm ml-2" href="login.php">เข้าสู่ระบบ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success btn-sm ml-2" href="register.php">สมัครสมาชิก</a>
+                        </li>
                     <?php endif; ?>
-                    <a href="logout.php" class="btn btn-outline-danger">ออกจากระบบ</a>
-                <?php else: ?>
-                    <a href="login.php" class="btn btn-outline-light mr-2">เข้าสู่ระบบ</a>
-                    <a href="register.php" class="btn btn-outline-success">สมัครสมาชิก</a>
-                <?php endif; ?>
+                </ul>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <div class="hero">
-        <div class="container">
-            <h1>Welcome to Our Hotel</h1>
-            <p>Find your perfect room for a comfortable stay</p>
+    <div class="hero" style="padding: 120px 0;">
+        <div class="container text-center">
+            <h1 class="display-3 mb-4">ยินดีต้อนรับสู่โรงแรมของเรา</h1>
+            <p class="lead mb-5">ประสบการณ์พักผ่อนสุดพิเศษ ในราคาที่คุณคู่ควร</p>
+            <a href="rooms.php" class="btn btn-light btn-lg px-5 py-3">
+                <i class="fas fa-bed mr-2"></i> เลือกห้องพักของคุณ
+            </a>
         </div>
     </div>
 
-    <!-- Rooms -->
-    <div class="container">
-        <h2 class="text-center mb-5">Available Rooms</h2>
+    <!-- Features Section -->
+    <div class="container my-5 py-5">
+        <h2 class="text-center mb-5">✨ ทำไมต้องเลือกเรา</h2>
         <div class="row">
-            <?php while ($room = $result->fetch_assoc()): ?>
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="../assets/images/<?php echo $room['image']; ?>" class="card-img-top" alt="<?php echo $room['name']; ?>">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $room['name']; ?></h5>
-                            <p class="card-text"><?php echo $room['details']; ?></p>
-                            <p class="card-text"><strong>Price: </strong><?php echo number_format($room['price'], 2); ?> THB/night</p>
-                            <p class="card-text"><small class="text-muted">Available: <?php echo $room['available_rooms']; ?> rooms</small></p>
-                            <a href="room_detail.php?id=<?php echo $room['id']; ?>" class="btn btn-primary btn-block">View Details</a>
-                        </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 3rem;">🏨</div>
+                        <h4>ห้องพักหลากหลาย</h4>
+                        <p class="text-muted">มีห้องพักให้เลือกหลายประเภท ตอบโจทย์ทุกความต้องการ</p>
                     </div>
                 </div>
-            <?php endwhile; ?>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 3rem;">💰</div>
+                        <h4>ราคาย่อมเยา</h4>
+                        <p class="text-muted">ราคาที่เป็นธรรม คุ้มค่ากับทุกการเข้าพัก</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 text-center mb-4">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body p-4">
+                        <div class="mb-3" style="font-size: 3rem;">📱</div>
+                        <h4>จองง่าย สะดวกรวดเร็ว</h4>
+                        <p class="text-muted">จองออนไลน์ได้ทุกที่ ทุกเวลา ง่ายๆ ผ่านเว็บไซต์</p>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- About Section -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h2 class="mb-4">🌟 เกี่ยวกับเรา</h2>
+                    <h4 class="text-primary mb-3">ช้องนาง เรสซิเดนซ์</h4>
+                    <p class="lead">โรงแรมของเราให้บริการห้องพักที่สะอาด สะดวกสบาย พร้อมสิ่งอำนวยความสะดวกครบครัน</p>
+                    <p>เรามุ่งมั่นที่จะมอบประสบการณ์การพักผ่อนที่ดีที่สุดให้กับลูกค้าทุกท่าน ด้วยบริการที่เป็นมิตร และราคาที่เหมาะสม</p>
+                    
+                    <div class="mt-4">
+                        <h5 class="mb-3">📍 ที่อยู่</h5>
+                        <p class="mb-1">146 พิศิษฐ์พยาบาล</p>
+                        <p class="mb-1">ตำบลท่าตะเภา อำเภอเมืองชุมพร</p>
+                        <p class="mb-1">จังหวัดชุมพร 86000</p>
+                        <p class="mb-3">ประเทศไทย</p>
+                        <p class="mb-1">📞 โทร: 077511218</p>
+                    </div>
+                    
+                    <ul class="list-unstyled mt-4">
+                        <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> ห้องพักสะอาด ทันสมัย</li>
+                        <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> สิ่งอำนวยความสะดวกครบถ้วน</li>
+                        <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> Wi-Fi ฟรี ความเร็วสูง</li>
+                        <li class="mb-2"><i class="fas fa-check text-success mr-2"></i> บริการอาหารเช้า</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=600" 
+                         alt="Hotel" 
+                         class="img-fluid rounded shadow">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="container text-center my-5 py-5">
+        <h2 class="mb-4">พร้อมจองห้องพักแล้วหรือยัง?</h2>
+        <p class="lead mb-4">เลือกห้องพักที่ใช่สำหรับคุณวันนี้</p>
+        <a href="rooms.php" class="btn btn-primary btn-lg px-5 py-3 mr-3">
+            <i class="fas fa-calendar-check mr-2"></i> ดูห้องพักทั้งหมด
+        </a>
+        <a href="attractions.php" class="btn btn-success btn-lg px-5 py-3">
+            <i class="fas fa-map-marked-alt mr-2"></i> สถานที่ท่องเที่ยว
+        </a>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4">
+        <div class="container">
+            <h5 class="mb-3">ช้องนาง เรสซิเดนซ์</h5>
+            <p class="mb-1">📍 146 พิศิษฐ์พยาบาล ตำบลท่าตะเภา อำเภอเมืองชุมพร</p>
+            <p class="mb-3">จังหวัดชุมพร 86000 ประเทศไทย</p>
+            <p class="mb-2">📞 โทร: 077511218</p>
+            <hr class="bg-light my-3">
+            <p class="mb-0">© 2025 Hotel Booking System. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-<?php $conn->close(); ?>

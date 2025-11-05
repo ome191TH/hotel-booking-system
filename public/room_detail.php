@@ -40,18 +40,41 @@ if (isset($_GET['id']) && intval($_GET['id']) > 0) {
     <nav class="navbar navbar-expand-lg navbar-dark">
         <div class="container">
             <a class="navbar-brand" href="index.php">🏨 Hotel Booking</a>
-            <div class="ml-auto">
-                <?php if(isset($_SESSION['user_id'])): ?>
-                    <span class="text-white mr-3">สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
-                    <a href="my_bookings.php" class="btn btn-outline-light btn-sm mr-2">การจองของฉัน</a>
-                    <?php if($_SESSION['role'] == 'admin'): ?>
-                        <a href="admin.php" class="btn btn-outline-warning btn-sm mr-2">Admin</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.php">หน้าแรก</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="rooms.php">จองห้องพัก</a>
+                    </li>
+                    <?php if(isset($_SESSION['user_id'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="my_bookings.php">การจองของฉัน</a>
+                        </li>
+                        <?php if($_SESSION['role'] == 'admin'): ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="admin.php">Admin</a>
+                            </li>
+                        <?php endif; ?>
+                        <li class="nav-item">
+                            <span class="nav-link text-white">สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-danger btn-sm ml-2" href="logout.php">ออกจากระบบ</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-light btn-sm ml-2" href="login.php">เข้าสู่ระบบ</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="btn btn-outline-success btn-sm ml-2" href="register.php">สมัครสมาชิก</a>
+                        </li>
                     <?php endif; ?>
-                    <a href="logout.php" class="btn btn-outline-danger btn-sm">ออกจากระบบ</a>
-                <?php else: ?>
-                    <a href="login.php" class="btn btn-outline-light btn-sm mr-2">เข้าสู่ระบบ</a>
-                    <a href="register.php" class="btn btn-outline-success btn-sm">สมัครสมาชิก</a>
-                <?php endif; ?>
+                </ul>
             </div>
         </div>
     </nav>
@@ -121,6 +144,18 @@ if (isset($_GET['id']) && intval($_GET['id']) > 0) {
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center py-4 mt-5">
+        <div class="container">
+            <h5 class="mb-3">ช้องนาง เรสซิเดนซ์</h5>
+            <p class="mb-1">📍 146 พิศิษฐ์พยาบาล ตำบลท่าตะเภา อำเภอเมืองชุมพร</p>
+            <p class="mb-3">จังหวัดชุมพร 86000 ประเทศไทย</p>
+            <p class="mb-2">📞 โทร: 077511218</p>
+            <hr class="bg-light my-3">
+            <p class="mb-0">© 2025 Hotel Booking System. All rights reserved.</p>
+        </div>
+    </footer>
 
     <script src="../assets/js/script.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
