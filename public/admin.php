@@ -12,8 +12,21 @@ include '../config/db.php';
 // Delete booking
 if (isset($_GET['delete'])) {
     $id = intval($_GET['delete']);
-    $conn->query("DELETE FROM bookings WHERE id = $id");
+    
+    // ดึงข้อมูล room_id ก่อนลบเพื่อเพิ่มจำนวนห้องว่างกลับ
+    $get_room = $conn->query("SELECT room_id FROM bookings WHERE id = $id");
+    if ($room_data = $get_room->fetch_assoc()) {
+        $room_id = $room_data['room_id'];
+        
+        // ลบการจอง
+        $conn->query("DELETE FROM bookings WHERE id = $id");
+        
+        // เพิ่มจำนวนห้องว่างกลับ
+        $conn->query("UPDATE rooms SET available_rooms = available_rooms + 1 WHERE id = $room_id");
+    }
+    
     header("Location: admin.php");
+    exit();
 }
 
 $query = "SELECT b.id, r.name AS room_name, u.username, b.name AS guest_name, b.phone, b.checkin_date, b.checkout_date, b.created_at 

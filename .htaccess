@@ -1,0 +1,22 @@
+# ป้องกันการเข้าถึงไฟล์ที่ไม่ควรเห็น
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# ป้องกัน directory listing
+Options -Indexes
+
+# เปิด error reporting (ปิดตอน production)
+php_flag display_errors Off
+php_flag log_errors On
+
+# ตั้งค่า timezone
+php_value date.timezone "Asia/Bangkok"
+
+# เพิ่มความปลอดภัย
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set X-XSS-Protection "1; mode=block"
+</IfModule>

@@ -31,6 +31,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $insert_stmt->bind_param("iissss", $user_id, $room_id, $name, $phone, $checkin_date, $checkout_date);
 
         if ($insert_stmt->execute()) {
+            // ลดจำนวนห้องว่าง
+            $update_query = "UPDATE rooms SET available_rooms = available_rooms - 1 WHERE id = ?";
+            $update_stmt = $conn->prepare($update_query);
+            $update_stmt->bind_param("i", $room_id);
+            $update_stmt->execute();
+            $update_stmt->close();
+            
             $success = true;
             $message = "การจองห้องพักสำเร็จ!";
         } else {
@@ -44,11 +51,11 @@ $conn->close();
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking Result</title>
+    <title><?php echo $success ? 'จองสำเร็จ' : 'เกิดข้อผิดพลาด'; ?> - Hotel Booking</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
@@ -56,13 +63,26 @@ $conn->close();
     <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <div class="alert <?php echo $success ? 'alert-success' : 'alert-danger'; ?> alert-custom text-center">
-                    <h4><?php echo $message; ?></h4>
-                    <hr>
-                    <a href="index.php" class="btn <?php echo $success ? 'btn-success' : 'btn-danger'; ?>">กลับหน้าแรก</a>
-                    <?php if (!$success): ?>
-                        <a href="javascript:history.back()" class="btn btn-secondary">ลองใหม่</a>
-                    <?php endif; ?>
+                <div class="card shadow">
+                    <div class="card-body text-center p-5">
+                        <?php if ($success): ?>
+                            <div class="text-success mb-3" style="font-size: 80px;">✅</div>
+                            <h3 class="text-success mb-3"><?php echo $message; ?></h3>
+                            <p class="text-muted">คุณสามารถตรวจสอบการจองได้ที่เมนู "การจองของฉัน"</p>
+                            <div class="mt-4">
+                                <a href="my_bookings.php" class="btn btn-success btn-lg">ดูการจองของฉัน</a>
+                                <a href="index.php" class="btn btn-outline-secondary">กลับหน้าแรก</a>
+                            </div>
+                        <?php else: ?>
+                            <div class="text-danger mb-3" style="font-size: 80px;">❌</div>
+                            <h3 class="text-danger mb-3"><?php echo $message; ?></h3>
+                            <p class="text-muted">กรุณาตรวจสอบข้อมูลและลองอีกครั้ง</p>
+                            <div class="mt-4">
+                                <a href="booking_form.php" class="btn btn-primary btn-lg">ลองอีกครั้ง</a>
+                                <a href="index.php" class="btn btn-outline-secondary">กลับหน้าแรก</a>
+                            </div>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
         </div>
