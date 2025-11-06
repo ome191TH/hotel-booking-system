@@ -28,6 +28,7 @@ $result = $stmt->get_result();
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>การจองของฉัน - Hotel Booking</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -40,25 +41,28 @@ $result = $stmt->get_result();
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">หน้าแรก</a>
+                        <a class="nav-link" href="index.php"><i class="fas fa-home"></i> หน้าแรก</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="rooms.php">จองห้องพัก</a>
+                        <a class="nav-link" href="rooms.php"><i class="fas fa-bed"></i> จองห้องพัก</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="attractions.php"><i class="fas fa-map-marked-alt"></i> สถานที่ท่องเที่ยว</a>
                     </li>
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <li class="nav-item active">
-                            <a class="nav-link" href="my_bookings.php">การจองของฉัน</a>
+                            <a class="nav-link" href="my_bookings.php"><i class="fas fa-list"></i> การจองของฉัน</a>
                         </li>
                         <?php if($_SESSION['role'] == 'admin'): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="admin.php">Admin</a>
+                                <a class="nav-link" href="admin.php"><i class="fas fa-user-shield"></i> Admin</a>
                             </li>
                         <?php endif; ?>
                         <li class="nav-item">
-                            <span class="nav-link text-white">สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                            <span class="nav-link text-white"><i class="fas fa-user"></i> สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-danger btn-sm ml-2" href="logout.php">ออกจากระบบ</a>
+                            <a class="btn btn-outline-danger btn-sm ml-2" href="logout.php"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">

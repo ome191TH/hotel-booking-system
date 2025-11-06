@@ -23,35 +23,35 @@ session_start();
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="index.php">หน้าแรก</a>
+                        <a class="nav-link" href="index.php"><i class="fas fa-home"></i> หน้าแรก</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="rooms.php">จองห้องพัก</a>
+                        <a class="nav-link" href="rooms.php"><i class="fas fa-bed"></i> จองห้องพัก</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="attractions.php">สถานที่ท่องเที่ยว</a>
+                        <a class="nav-link" href="attractions.php"><i class="fas fa-map-marked-alt"></i> สถานที่ท่องเที่ยว</a>
                     </li>
                     <?php if(isset($_SESSION['user_id'])): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="my_bookings.php">การจองของฉัน</a>
+                            <a class="nav-link" href="my_bookings.php"><i class="fas fa-list"></i> การจองของฉัน</a>
                         </li>
                         <?php if($_SESSION['role'] == 'admin'): ?>
                             <li class="nav-item">
-                                <a class="nav-link" href="admin.php">Admin</a>
+                                <a class="nav-link" href="admin.php"><i class="fas fa-user-shield"></i> Admin</a>
                             </li>
                         <?php endif; ?>
                         <li class="nav-item">
-                            <span class="nav-link text-white">สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
+                            <span class="nav-link text-white"><i class="fas fa-user"></i> สวัสดี, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-danger btn-sm ml-2" href="logout.php">ออกจากระบบ</a>
+                            <a class="btn btn-outline-danger btn-sm ml-2" href="logout.php"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
                         </li>
                     <?php else: ?>
                         <li class="nav-item">
-                            <a class="btn btn-outline-light btn-sm ml-2" href="login.php">เข้าสู่ระบบ</a>
+                            <a class="btn btn-outline-light btn-sm ml-2" href="login.php"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-outline-success btn-sm ml-2" href="register.php">สมัครสมาชิก</a>
+                            <a class="btn btn-outline-success btn-sm ml-2" href="register.php"><i class="fas fa-user-plus"></i> สมัครสมาชิก</a>
                         </li>
                     <?php endif; ?>
                 </ul>
@@ -139,15 +139,70 @@ session_start();
         </div>
     </div>
 
+    <!-- Attractions Section -->
+    <div class="bg-light py-5">
+        <div class="container">
+            <h2 class="text-center mb-4"><i class="fas fa-map-marked-alt"></i> สถานที่ท่องเที่ยวใกล้โรงแรม</h2>
+            <p class="text-center lead mb-5">ค้นพบความงามของจังหวัดชุมพร เมืองท่าแห่งอันดามัน</p>
+            
+            <div class="row">
+                <!-- หาดทุ่งวุ้าแล้ว -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <div class="mb-3" style="font-size: 3rem; color: #7B2CBF;">
+                                <i class="fas fa-umbrella-beach"></i>
+                            </div>
+                            <h5 class="card-title" style="color: #7B2CBF;">หาดทุ่งวุ้าแล้ว</h5>
+                            <p class="card-text text-muted">ชายหาดที่สวยงาม น้ำทะเลใส ทรายขาวนุ่ม เหมาะสำหรับการเล่นน้ำและพักผ่อน</p>
+                            <p class="mb-0"><i class="fas fa-map-marker-alt text-danger"></i> <strong>5 กม.</strong> (10 นาที)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- อุทยานแห่งชาติหมู่เกาะชุมพร -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <div class="mb-3" style="font-size: 3rem; color: #7B2CBF;">
+                                <i class="fas fa-fish"></i>
+                            </div>
+                            <h5 class="card-title" style="color: #7B2CBF;">หมู่เกาะชุมพร</h5>
+                            <p class="card-text text-muted">หมู่เกาะสวยงามกว่า 40 เกาะ เหมาะสำหรับดำน้ำดูปะการังและนั่งเรือชมธรรมชาติ</p>
+                            <p class="mb-0"><i class="fas fa-map-marker-alt text-danger"></i> <strong>15 กม.</strong> (25 นาที)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- เขาแม่เจดีย์ -->
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100 shadow-sm border-0">
+                        <div class="card-body text-center">
+                            <div class="mb-3" style="font-size: 3rem; color: #7B2CBF;">
+                                <i class="fas fa-mountain"></i>
+                            </div>
+                            <h5 class="card-title" style="color: #7B2CBF;">เขาแม่เจดีย์</h5>
+                            <p class="card-text text-muted">จุดชมวิวที่สูงที่สุดในชุมพร มองเห็นทะเลอันดามันและอ่าวไทยในเวลาเดียวกัน</p>
+                            <p class="mb-0"><i class="fas fa-map-marker-alt text-danger"></i> <strong>22 กม.</strong> (40 นาที)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="attractions.php" class="btn btn-primary btn-lg px-5">
+                    <i class="fas fa-map-marked-alt mr-2"></i> ดูสถานที่ท่องเที่ยวทั้งหมด
+                </a>
+            </div>
+        </div>
+    </div>
+
     <!-- CTA Section -->
     <div class="container text-center my-5 py-5">
         <h2 class="mb-4">พร้อมจองห้องพักแล้วหรือยัง?</h2>
         <p class="lead mb-4">เลือกห้องพักที่ใช่สำหรับคุณวันนี้</p>
-        <a href="rooms.php" class="btn btn-primary btn-lg px-5 py-3 mr-3">
+        <a href="rooms.php" class="btn btn-primary btn-lg px-5 py-3">
             <i class="fas fa-calendar-check mr-2"></i> ดูห้องพักทั้งหมด
-        </a>
-        <a href="attractions.php" class="btn btn-success btn-lg px-5 py-3">
-            <i class="fas fa-map-marked-alt mr-2"></i> สถานที่ท่องเที่ยว
         </a>
     </div>
 

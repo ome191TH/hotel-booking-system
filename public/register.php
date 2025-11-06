@@ -41,6 +41,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
@@ -49,30 +50,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header bg-primary text-white">
-                        <h4>สมัครสมาชิก</h4>
+                        <h4><i class="fas fa-user-plus"></i> สมัครสมาชิก</h4>
                     </div>
                     <div class="card-body">
                         <?php if(!empty($error)): ?>
-                            <div class="alert alert-danger"><?php echo htmlspecialchars($error); ?></div>
+                            <div class="alert alert-danger"><i class="fas fa-exclamation-circle"></i> <?php echo htmlspecialchars($error); ?></div>
                         <?php endif; ?>
                         
                         <form method="POST">
                             <div class="form-group">
-                                <label>ชื่อผู้ใช้</label>
+                                <label><i class="fas fa-user"></i> ชื่อผู้ใช้</label>
                                 <input type="text" name="username" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>อีเมล</label>
+                                <label><i class="fas fa-envelope"></i> อีเมล</label>
                                 <input type="email" name="email" class="form-control" required>
                             </div>
                             <div class="form-group">
-                                <label>รหัสผ่าน</label>
+                                <label><i class="fas fa-lock"></i> รหัสผ่าน</label>
                                 <input type="password" name="password" class="form-control" required>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-block">สมัครสมาชิก</button>
+                            <button type="submit" class="btn btn-primary btn-block"><i class="fas fa-user-plus"></i> สมัครสมาชิก</button>
                         </form>
                         <hr>
-                        <p class="text-center">มีบัญชีอยู่แล้ว? <a href="login.php">เข้าสู่ระบบ</a></p>
+                        <p class="text-center">มีบัญชีอยู่แล้ว? <a href="login.php"><i class="fas fa-sign-in-alt"></i> เข้าสู่ระบบ</a></p>
+                        <p class="text-center"><a href="index.php"><i class="fas fa-home"></i> กลับหน้าแรก</a></p>
                     </div>
                 </div>
             </div>
