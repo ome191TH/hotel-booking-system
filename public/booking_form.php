@@ -63,7 +63,13 @@ $rooms = mysqli_fetch_all($result, MYSQLI_ASSOC);
                         <a class="nav-link" href="attractions.php"><i class="fas fa-map-marked-alt"></i> สถานที่ท่องเที่ยว</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="food_menu.php"><i class="fas fa-utensils"></i> สั่งอาหาร</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="my_bookings.php"><i class="fas fa-list"></i> การจองของฉัน</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="my_food_orders.php"><i class="fas fa-receipt"></i> ออเดอร์อาหาร</a>
                     </li>
                     <?php if($_SESSION['role'] == 'admin'): ?>
                         <li class="nav-item">

@@ -73,6 +73,7 @@ $total_rooms = $conn->query("SELECT COUNT(*) as count FROM rooms")->fetch_assoc(
             <a class="navbar-brand" href="admin.php"><i class="fas fa-user-shield"></i> Admin Panel</a>
             <div class="ml-auto">
                 <a href="index.php" class="btn btn-outline-light mr-2"><i class="fas fa-home"></i> หน้าแรก</a>
+                <a href="admin_food_orders.php" class="btn btn-outline-light mr-2"><i class="fas fa-utensils"></i> จัดการออเดอร์อาหาร</a>
                 <a href="attractions.php" class="btn btn-outline-light mr-2"><i class="fas fa-map-marked-alt"></i> สถานที่ท่องเที่ยว</a>
                 <span class="text-white mr-3"><i class="fas fa-user"></i> ยินดีต้อนรับ, <?php echo htmlspecialchars($_SESSION['username']); ?></span>
                 <a href="logout.php" class="btn btn-outline-danger"><i class="fas fa-sign-out-alt"></i> ออกจากระบบ</a>
